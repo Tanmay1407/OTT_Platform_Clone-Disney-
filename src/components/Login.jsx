@@ -24,7 +24,7 @@ function Login() {
         <CTA>
             <CTALogoOne src="/images/cta-logo-one.svg"/ >
             <SignUp onClick={signIn}>
-                GET ALL THERE
+                GET ALL THERE!
             </SignUp>
             <Discription>
             Get Access to Premier Series !
