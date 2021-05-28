@@ -27,7 +27,7 @@ function Movies() {
 export default Movies
 
 const Container = styled.div`
- 
+ padding-bottom: 40px;
 
 
 `
@@ -36,7 +36,10 @@ const Content = styled.div`
 display: grid;
 grid-gap: 25px;
 grid-template-columns: repeat(4,minmax(0,1fr));
+@media (max-width: 768px){
+    grid-template-columns: repeat(2,minmax(0,1fr));
 
+   }
 `
 const Wrap = styled.div`
 cursor: pointer;

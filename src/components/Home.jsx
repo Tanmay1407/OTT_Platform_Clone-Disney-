@@ -6,8 +6,13 @@ import Vierwers from './Vierwers'
 import db from '../firebase'
 import {useDispatch} from 'react-redux'
 import { setMovies } from '../features/movie/movieSlice'
+import { useHistory} from 'react-router-dom'
+import { useSelector } from "react-redux"
+import { selectUserEmail } from '../features/user/userSlice'
 function Home() {
     const dispatch = useDispatch();
+    const history = useHistory();
+    const email = useSelector(selectUserEmail)
 
     useEffect(()=>{
         db.collection("movies").onSnapshot((snapshot) => {
@@ -18,6 +23,9 @@ function Home() {
                 setMovies(tempMovies)
             );
         })
+        // if(!email){
+        //     history.push("/login")
+        // }
     }, [])
 
     return (

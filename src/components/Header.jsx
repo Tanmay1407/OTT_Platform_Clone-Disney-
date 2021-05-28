@@ -1,6 +1,5 @@
 import React  from "react";
 import {auth , provider} from '../firebase'
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {selectUserName, selectUserPhoto, setSignOut, setUserLogin} from '../features/user/userSlice'
 import { useSelector} from 'react-redux'
@@ -15,6 +14,7 @@ function Header() {
   const userPhoto = useSelector(selectUserPhoto);
 
   useEffect(()=>{
+   
     auth.onAuthStateChanged(async (user)=>{
       if(user){
         dispatch(setUserLogin({
@@ -27,16 +27,22 @@ function Header() {
     })
   },[])
   const signIn = () =>{
-      auth.signInWithPopup(provider)
-      .then((result)=>{
-        let user = result.user
-       dispatch(setUserLogin({
-         name: user.displayName,
-         email: user.email,
-         photo: user.photoURL
-       }))
-       history.push('/')
-      })
+    dispatch(setUserLogin({
+      name: "XYZ",
+      email: "test@gmail.com",
+      photo: "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png"
+    }))
+    history.push("/")
+      // auth.signInWithPopup(provider)
+      // .then((result)=>{
+      //   let user = result.user
+      //  dispatch(setUserLogin({
+      //    name: user.displayName,
+      //    email: user.email,
+      //    photo: user.photoURL
+      //  }))
+      //  history.push('/')
+      // })
   }
   const signOut = () =>{
     auth.signOut()
@@ -45,6 +51,9 @@ function Header() {
       history.push('/login')
     })
 
+  }
+  const home = ()=>{
+    history.push("/")
   }
   return (
     <Nav>
@@ -59,7 +68,7 @@ function Header() {
        :  
         <>
         <NavMenu>
-        <a>
+        <a onClick={home}>
           <img src="/images/home-icon.svg" />
           <span>HOME</span>
         </a>
@@ -84,9 +93,15 @@ function Header() {
           <span>SERIES</span>
         </a>
       </NavMenu>
+      <SignOut>
       <UserImg onClick={signOut} src={userPhoto} />
+      <DropDown>
+        <span>Sign Out</span>
+      </DropDown>
+      </SignOut>
       </>
       }
+      
     </Nav>
   );
 }
@@ -95,11 +110,19 @@ export default Header;
 
 const Nav = styled.nav`
   height: 70px;
+  display: flex;
+  justify-content:space-between;
   background: #090b13;
   display: flex;
   align-items: center;
   padding: 0 36px;
   overflow-x: hidden;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left:0;
+  right: 0;
+
 `;
 const Logo = styled.img`
   width: 80px;
@@ -111,7 +134,7 @@ const NavMenu = styled.div`
   align-items: center;
 
   a {
-    display: flex;
+   display: flex;
     align-items: center;
     padding: 0 12px;
     cursor: pointer;
@@ -123,6 +146,7 @@ const NavMenu = styled.div`
       letter-spacing: 1.42px;
       position: relative;
       &:after {
+        text-decoration: none;
         content: "";
         height: 2px;
         background: white;
@@ -175,4 +199,15 @@ const LoginContainer = styled.div`
 flex: 1;
 display: flex;
 justify-content: flex-end;
+`
+const SignOut = styled.div`
+UserImg {
+  &:hover + DropDown{
+   display: block;
+  }
+}
+`
+const DropDown = styled.div`
+display: none ;
+z-index : 4;
 `

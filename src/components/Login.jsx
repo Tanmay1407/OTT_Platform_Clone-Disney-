@@ -8,16 +8,23 @@ function Login() {
     const dispatch = useDispatch()
     const history = useHistory()
     const signIn = () =>{
-        auth.signInWithPopup(provider)
-        .then((result)=>{
-          let user = result.user
-         dispatch(setUserLogin({
-           name: user.displayName,
-           email: user.email,
-           photo: user.photoURL
-         }))
-         history.push('/')
-        })
+        dispatch(setUserLogin({
+               name: "XYZ",
+               email: "test@gmail.com",
+               photo: "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png"
+             }))
+             history.push("/")
+
+        // auth.signInWithPopup(provider)
+        // .then((result)=>{
+        //   let user = result.user
+        //  dispatch(setUserLogin({
+        //    name: user.displayName,
+        //    email: user.email,
+        //    photo: user.photoURL
+        //  }))
+        //  history.push('/')
+        // })
     }
     return (
         <Container>
